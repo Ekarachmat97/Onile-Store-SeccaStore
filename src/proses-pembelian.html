@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="proses-pembelian.css">
+    <title>Proses Pembelian</title>
+</head>
+<body>
+    <header>
+        <h1>Proses Pembelian</h1>
+    </header>
+
+    <!-- Formulir Data Diri User -->
+    <form id="form-data-diri">
+        <h2>Data Diri</h2>
+        <label for="nama-lengkap">Nama Lengkap:</label>
+        <input type="text" id="nama-lengkap" required>
+
+        <label for="alamat-lengkap">Alamat Lengkap:</label>
+        <textarea id="alamat-lengkap" required></textarea>
+
+        <label for="nomor-hp">Nomor HP:</label>
+        <input type="tel" id="nomor-hp" required>
+
+        <label for="alamat-email">Alamat Email:</label>
+        <input type="email" id="alamat-email" required>
+
+        <h2>Metode Pembayaran</h2>
+        <label>
+            <input type="radio" id="transfer-bank" name="metode-pembayaran" required> Transfer Bank
+        </label>
+        <label>
+            <input type="radio" id="cod" name="metode-pembayaran" required> COD (Bayar Tunai)
+        </label>
+
+        <!-- Input Alamat GPS untuk COD -->
+        <label for="gps" id="alamat-gps-label">Alamat GPS:</label>
+        <input type="text" id="gps" style="display: none;">
+        
+        <!-- Nomor Rekening Admin untuk Transfer Bank -->
+        <div id="nomor-rekening" style="display: none;">
+            <p>Nomor Rekening Admin:</p>
+            <span id="admin-rekening">1234-5678-9012-3456</span>
+            <button id="copy-rekening">Salin Nomor Rekening</button>
+        </div>
+
+        <!-- Tombol Proses Pembelian -->
+        <button id="proses-pembelian">Proses Pembelian</button>
+
+        <!-- Pesan Hasil Pembelian -->
+        <div id="pesan" style="display: none;"></div>
+
+        <!-- Tombol Kembali ke Beranda -->
+        <button id="kembali" style="display: none;">Kembali ke Beranda</button>
+
+        <!-- Loading Box -->
+        <div id="loading" style="display: none;">
+            <p>Sedang memproses pembayaran...</p>
+        </div>
+    </form>
+
+    <script>
+        // Event listener untuk radio button metode pembayaran
+        const transferBankRadio = document.getElementById("transfer-bank");
+        const codRadio = document.getElementById("cod");
+        const nomorRekening = document.getElementById("nomor-rekening");
+        const alamatGPS = document.getElementById("alamat-gps");
+        const adminRekening = document.getElementById("admin-rekening");
+        const copyRekeningButton = document.getElementById("copy-rekening");
+        const prosesPembelianButton = document.getElementById("proses-pembelian");
+        const pesanElement = document.getElementById("pesan");
+        const kembaliButton = document.getElementById("kembali");
+        const loadingElement = document.getElementById("loading");
+
+        transferBankRadio.addEventListener("change", () => {
+            nomorRekening.style.display = "block";
+            alamatGPS.style.display = "none";
+            document.getElementById("alamat-gps-label").style.display = "none";
+        });
+
+        codRadio.addEventListener("change", () => {
+            nomorRekening.style.display = "none";
+            alamatGPS.style.display = "block";
+            document.getElementById("alamat-gps-label").style.display = "block";
+        });
+
+        // Event listener untuk tombol "Proses Pembelian"
+        prosesPembelianButton.addEventListener("click", () => {
+            // Validasi form data diri pengguna
+            const namaLengkap = document.getElementById("nama-lengkap").value;
+            const alamatLengkap = document.getElementById("alamat-lengkap").value;
+            const nomorHp = document.getElementById("nomor-hp").value;
+            const alamatEmail = document.getElementById("alamat-email").value;
+
+            if (!namaLengkap || !alamatLengkap || !nomorHp || !alamatEmail) {
+                alert("Harap lengkapi semua data diri terlebih dahulu.");
+                return; // Hentikan proses pembelian jika data diri tidak lengkap
+            }
+
+            // Simulasi pembayaran berhasil atau gagal (Anda dapat menggantinya dengan logika sesungguhnya)
+            const isTransferBank = transferBankRadio.checked;
+            const isCod = codRadio.checked;
+            
+            loadingElement.style.display = "block";
+            prosesPembelianButton.disabled = true;
+
+            setTimeout(() => {
+                loadingElement.style.display = "none";
+                pesanElement.style.display = "block";
+                kembaliButton.style.display = "block";
+
+                if (isTransferBank) {
+                    // Simulasi pembayaran berhasil
+                    pesanElement.textContent = "Terima kasih! Pembayaranmu berhasil.";
+                    kembaliButton.addEventListener("click", () => {
+                        // Alihkan kembali ke beranda (index.html)
+                        window.location.href = "index.html";
+                    });
+
+                    // Admin dapat mengkonfirmasi pembayaran
+                    konfirmasiPembayaran();
+                } else if (isCod) {
+                    const gpsValue = document.getElementById("gps").value;
+                    if (gpsValue) {
+                        // Simulasi pembayaran COD berhasil
+                        pesanElement.textContent = "Terima kasih! Pembayaranmu berhasil.";
+                        kembaliButton.addEventListener("click", () => {
+                            // Alihkan kembali ke beranda (index.html)
+                            window.location.href = "index.html";
+                        });
+
+                        // Admin dapat mengkonfirmasi pembayaran
+                        konfirmasiPembayaran();
+                    } else {
+                        alert("Silakan masukkan alamat GPS terlebih dahulu.");
+                    }
+                } else {
+                    alert("Silakan pilih metode pembayaran terlebih dahulu.");
+                }
+            }, 3000); // Simulasi pembayaran berhasil atau gagal dalam 3 detik (Anda dapat menggantinya sesuai kebutuhan)
+        });
+
+        // Event listener untuk tombol "Salin Nomor Rekening"
+        copyRekeningButton.addEventListener("click", () => {
+            const adminRekeningText = adminRekening.textContent;
+            // Salin nomor rekening ke clipboard
+            copyToClipboard(adminRekeningText);
+            alert("Nomor rekening telah disalin ke clipboard.");
+        });
+
+        // Fungsi untuk menyalin teks ke clipboard
+        function copyToClipboard(text) {
+            const tempElement = document.createElement("textarea");
+            tempElement.value = text;
+            document.body.appendChild(tempElement);
+            tempElement.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempElement);
+        }
+
+        function konfirmasiPembayaran() {
+            // Admin dapat mengkonfirmasi pembayaran di sini
+            // Anda dapat menambahkan logika untuk mengirim pemberitahuan atau tindakan lainnya
+            // Misalnya, Anda dapat mengirim email konfirmasi ke pengguna
+        }
+    </script>
+</body>
+</html>
+
+    
+    <style>
+body, h1, h2, h3, p, ul, li, button {
+    margin: 0;
+    padding: 0;
+}
+
+/* Apply a modern sans-serif font */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f0f0f0;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+}
+
+header h1 {
+    font-size: 24px;
+}
+
+/* Form styling */
+form {
+    max-width: 400px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+form input[type="text"],
+form input[type="tel"],
+form input[type="email"],
+form textarea {
+    width: 100%;
+    padding: 10px 0;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Radio button and label styling */
+form label[for="transfer-bank"],
+form label[for="cod"] {
+    display: inline-block;
+    font-weight: normal;
+}
+
+/* Display additional fields based on selected payment method */
+#nomor-rekening,
+#alamat-gps {
+    display: none;
+}
+
+/* Button styling */
+button {
+    position: relative;
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-left: 5rem;
+    margin-top: 2rem;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+/* Styling for the copy button */
+#copy-rekening {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+#copy-rekening:hover {
+    background-color: #0056b3;
+}
+
+/* Total price display */
+#total-price {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Additional styling for mobile devices */
+@media screen and (max-width: 480px) {
+    form {
+        padding: 10px;
+        margin-top: 1rem;
+    }
+
+    form input[type="text"],
+    form input[type="tel"],
+    form input[type="email"],
+    form textarea {
+        margin-bottom: 10px;
+    }
+}
+
+    </style>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/src/konfirmasi-pembayaran.css" />
+    <title>Konfirmasi Pembayaran</title>
+  </head>
+  <body>
+    <header>
+      <h1>Konfirmasi Pembayaran</h1>
+    </header>
+
+    <!-- Tempat untuk menampilkan produk yang akan dibeli -->
+    <div class="cart-items">
+      <!-- Produk yang akan ditampilkan akan ditambahkan di sini -->
+    </div>
+    <b class="total">Total Harga: Rp.<span id="total-price"></span></b>
+
+    <!-- Tombol untuk konfirmasi pembelian -->
+    <button class="confirm-purchase-btn">Konfirmasi Pembelian</button>
+
+    <script>
+      // Ambil produk yang disimpan dalam localStorage
+      const cartItems = JSON.parse(localStorage.getItem("cartItems"));
+
+      // Ambil elemen .cart-items untuk menampilkan produk
+      const cartItemsList = document.querySelector(".cart-items");
+      const totalPriceElement = document.getElementById("total-price"); // Tambahkan ini
+
+      // Kemudian, tampilkan produk pada halaman
+      if (cartItems && cartItems.length > 0) {
+        let total = 0; // Tambahkan ini untuk menghitung total harga
+
+        cartItems.forEach((item) => {
+          // Buat elemen untuk menampilkan produk pada halaman konfirmasi-pembayaran.html
+          const productItem = document.createElement("div");
+          productItem.classList.add("product-item");
+          productItem.innerHTML = `
+            <img src="${item.image}" alt="${item.name}">
+            <h3>${item.name}</h3>
+            <p>Rp.${item.price}</p>
+        `;
+
+          // Tambahkan produk ke dalam elemen .cart-items
+          cartItemsList.appendChild(productItem);
+
+          // Tambahkan harga produk ke total
+          total += item.price;
+        });
+
+        // Tampilkan total harga di halaman
+        totalPriceElement.textContent = total.toFixed(2);
+      } else {
+        // Tampilkan pesan jika keranjang kosong
+        alert("Keranjang belanja Anda kosong.");
+      }
+
+      // Event listener untuk tombol konfirmasi pembelian
+      const confirmPurchaseBtn = document.querySelector(
+        ".confirm-purchase-btn"
+      );
+      confirmPurchaseBtn.addEventListener("click", () => {
+        window.location.href = "/src/proses-pembelian.html";
+      });
+    </script>
+  </body>
+</html>

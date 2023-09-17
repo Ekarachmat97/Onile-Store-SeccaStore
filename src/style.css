@@ -1,0 +1,387 @@
+/* SECCA */
+/* SECCA */
+/* SECCA */
+
+html {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+/* Reset some default styles */
+body,
+h1,
+h2,
+h3,
+p,
+ul,
+li {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: hsl(277, 25%, 10%);
+}
+
+/* HEADER */
+
+.carousel {
+  margin-top: 4rem;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 30px;
+  padding-top: 5rem;
+}
+
+.product-card {
+  background-color: #ccc;
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
+}
+.product-card:hover {
+  transform: scale(1.05);
+}
+
+.product-card img {
+  max-width: 100%;
+  border-radius: 15px;
+}
+.product-card h3 {
+  font-size: 15px;
+}
+
+footer {
+  text-align: center;
+  padding: 10px;
+  background-color: #f4f4f4;
+}
+/* Add styles for the cart icon */
+.cart-icon {
+  position: absolute;
+  right: 20px;
+  font-size: 24px;
+  color: #333;
+  cursor: pointer;
+  z-index: 999;
+}
+/* Add styles for the cart count */
+.cart-count {
+  position: absolute;
+  z-index: 999;
+  right: 6px;
+  top: 5px;
+  background-color: #ff6347;
+  color: white;
+  font-size: 14px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Add styles for the cart sidebar */
+.cart-sidebar {
+  z-index: 99;
+  position: fixed;
+  top: 0;
+  right: -500px;
+  width: 310px;
+  height: 100%;
+  background-color: white;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+  transition: right 0.3s ease-in-out;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.cart-sidebar.active {
+  right: 0;
+}
+.close-cart {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #777;
+  cursor: pointer;
+}
+
+.close-cart:hover {
+  color: #333;
+}
+
+.cart-sidebar h2 {
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.cart-items {
+  list-style: none;
+  padding: 0;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+}
+.product-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+.cart-total {
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.cart-item-content {
+  display: flex;
+  align-items: center;
+}
+.cart-item-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  margin-right: 10px;
+  border-radius: 10px;
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.checkout-btn {
+  margin-top: 20px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.checkout-btn:hover {
+  background-color: #555;
+}
+.delete-icon {
+  color: red;
+  cursor: pointer;
+  margin-left: 40px;
+}
+.delete-icon:hover {
+  color: darkred;
+}
+/* Style for the "View Details" button */
+.view-details-btn {
+  background-color: #2e86de;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.view-details-btn:hover {
+  background-color: #1e63b8;
+}
+
+/* Style for the "Add to Cart" button */
+.button-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.add-to-cart-btn {
+  font-size: 15px;
+  background-color: #000;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-to-cart-btn:hover {
+  background-color: #e35b3b;
+}
+.modal-product-image {
+  max-width: 100%;
+  height: auto;
+}
+
+.shop-now {
+  cursor: pointer;
+  position: absolute;
+  left: 13rem;
+  bottom: 6rem;
+  border: 1px solid #000;
+  border-radius: 2px 10px;
+  background-color: hsla(0, 0%, 0%, 0);
+}
+/* Style for the categories section */
+.categories {
+  background-color: hsl(0, 0%, 80%);
+  padding: 5px 0;
+  border-radius: 5px 20px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+h2 {
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.category-dropdown {
+  width: 100%;
+  padding: 5px;
+  font-size: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+#poster-img {
+  padding-top: 1rem;
+  border-radius: 10px 50px;
+}
+
+/* N A V B A R */
+nav {
+  background-color: hsl(0, 0%, 80%);
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  position: fixed;
+  z-index: 99;
+}
+
+nav ul {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  list-style: none;
+}
+
+nav ul li a {
+  text-decoration: none;
+  font-family: "Segoe UI", sans-serif;
+  color: #191919;
+  font-weight: 600;
+  padding: 8px 0;
+  transition: all;
+  transition-duration: 300ms;
+  border-bottom: 1px solid rgba(255, 68, 0, 0);
+}
+
+nav ul li a:hover {
+  color: orangered;
+  border-bottom: 1px solid orangered;
+}
+
+.menu-icon {
+  /* background-color: tomato; */
+  font-size: 28px;
+  display: none;
+}
+
+main {
+  padding-top: 7rem;
+}
+
+@media only screen and (max-width: 768px) {
+  .carousel img {
+    border-radius: 20px;
+    margin-bottom: 5px;
+  }
+  .products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  }
+  .add-to-cart-btn {
+    font-size: 13px;
+  }
+  nav {
+    flex-wrap: wrap;
+    position: fixed;
+    width: 100%;
+    top: 0;
+  }
+
+  nav ul {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  nav ul li:last-of-type {
+    padding-bottom: 8px;
+  }
+
+  nav ul.hidden {
+    display: none;
+  }
+
+  .menu-icon {
+    display: flex;
+    align-items: center;
+  }
+}
+
+/* Existing CSS rules here */
+
+/* Responsive styles for screens with a maximum width of 768px (typical for Android devices) */
+@media only screen and (max-width: 768px) {
+  .carousel img {
+    border-radius: 20px;
+    margin-bottom: 5px;
+  }
+
+  nav ul li:last-of-type {
+    padding-bottom: 8px;
+  }
+
+  /* Additional responsive styles specific to Android */
+  .shop-now {
+    left: 1rem; /* Adjust the position for smaller screens */
+    bottom: 3rem; /* Adjust the position for smaller screens */
+  }
+
+  .category-dropdown {
+    font-size: 14px; /* Reduce font size for smaller screens */
+  }
+
+  #poster-img {
+    padding-top: 0.5rem; /* Adjust padding for smaller screens */
+    height: 50%;
+  }
+
+  /* You can add more responsive styles as needed for specific elements */
+}
